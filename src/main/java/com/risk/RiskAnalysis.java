@@ -30,9 +30,10 @@ public class RiskAnalysis {
 
         int count = 0;
         double totalReturns = 0.0;
-        double[] returnsArr = returns.getReturnArr();
-        for (int i = returnsArr.length - 1; 0 <= i && returnAtConfidence < returnsArr[i]; --i ) {
-            totalReturns += returnsArr[i];
+        double[] percents = returns.getReturnPercents();
+        // Use reverse order to get returns from highest until confidence threshold
+        for (int i = percents.length - 1; 0 <= i && returnAtConfidence < percents[i]; --i ) {
+            totalReturns += percents[i];
             ++count;
         }
         return totalReturns * positionSize / count;
@@ -42,7 +43,7 @@ public class RiskAnalysis {
 
     /** Evaluate the return at a given confidence percentile */
     public double getReturnAtConfidence() {
-        double[] percentReturns = returns.getReturnPercentArr();
+        double[] percentReturns = returns.getReturnPercents();
         Percentile p = new Percentile(confidence);
         return p.evaluate(percentReturns, confidence);
     }

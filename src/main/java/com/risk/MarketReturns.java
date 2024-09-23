@@ -7,10 +7,10 @@ import java.util.Collections;
 public class MarketReturns {
     private final ArrayList<Double> returnPercents;
 
-    /** Create list of returns for historical prices in chronological order */
-    public Returns(List<Double> dailyPrices) {
+    /** Create market returns from historical prices */
+    public MarketReturns(List<Double> dailyPrices) {
         if (dailyPrices == null || dailyPrices.size() < 2) {
-            throw new ArgumentException("Cannot create returns for invalid prices list");
+            throw new IllegalArgumentException("Cannot create returns for invalid prices list");
         }
         returns = new ArrayList<>(dailyPrices.size() - 1);
         buildReturnPercents(dailyPrices);
@@ -31,12 +31,18 @@ public class MarketReturns {
     }
 
     /** Gets the return percentages as a sorted array of doubles from lowest to highest */
-    public double[] getReturnPercentArr() {
+    public double[] getReturnPercents() {
         return returnPercents.toArray(new double[returnPercents.size()]);
     }
 
-    /** Calculates percent return for a previous value and current */
-    public double calculateReturnPercent(double previousPrice, double currentPrice) {
+    /** Calculates percent return for a previous value and current
+     * @throws java.lang.IllegalArgumentException for non-positive previous or current price */
+    public static double calculateReturnPercent(double previousPrice, double currentPrice) throws IllegalArgumentException {
+        if (previousPrice <= 0) {
+            throw new IllegalArgumentException("Invalid previousPrice");
+        } else if (currentPrice <= 0) {
+            throw new IllegalArgumentException("Invalid currentPrice");
+        }
         return (currentPrice - previousPrice) * 100.0 / previousPrice;
     }
 }
