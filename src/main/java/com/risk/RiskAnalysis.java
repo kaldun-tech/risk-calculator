@@ -1,18 +1,17 @@
 import java.util.List;
 
 public class RiskAnalysis {
-    private List<Double> returns;
+    private Returns returns;
 
     public RiskAnalysis(List<Double> prices) {
-        // Calculate returns from prices
-        // this.returns = calculateReturns(prices);
+        returns = new Returns(prices);
     }
 
-    public double calculateVaR(double confidence) {
+    public double calculateValueAtRisk(double confidence) {
         // Implement VaR calculation
     }
 
-    public double calculateCVaR(double confidence) {
+    public double calculateConditionalVaR(double confidence) {
         // Implement CVaR calculation
     }
 
