@@ -1,3 +1,5 @@
+package main.java.com.risk;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.File;

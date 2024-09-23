@@ -1,17 +1,20 @@
+package main.java.com.risk;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Returns {
-    private final List<Double> returnPercents;
+public class MarketReturns {
+    private final ArrayList<Double> returnPercents;
 
     /** Create list of returns for historical prices in chronological order */
     public Returns(List<Double> dailyPrices) {
         if (dailyPrices == null || dailyPrices.size() < 2) {
             throw new ArgumentException("Cannot create returns for invalid prices list");
         }
-        returns = new ArrayList(dailyPrices.size() - 1);
+        returns = new ArrayList<>(dailyPrices.size() - 1);
         buildReturnPercents(dailyPrices);
+        sortReturnPercentsLowestToHighest();
     }
 
     private void buildReturnPercents(List<Double> dailyPrices) {
@@ -27,9 +30,9 @@ public class Returns {
         Collections.sort(returnPercents);
     }
 
-    /** Gets the return percentages as a sorted list of doubles from lowest to highest */
-    public List<Double> getReturnPercents() {
-        return returnPercents;
+    /** Gets the return percentages as a sorted array of doubles from lowest to highest */
+    public double[] getReturnPercentArr() {
+        return returnPercents.toArray(new double[returnPercents.size()]);
     }
 
     /** Calculates percent return for a previous value and current */
