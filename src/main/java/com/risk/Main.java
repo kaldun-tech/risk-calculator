@@ -1,30 +1,38 @@
+package main.java.com.risk;
+
 import java.util.List;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
 
 public class Main {
     public static void main(String[] args) {
-        // Fetch Bitcoin data
-        List<Double> bitcoinPrices = fetchBitcoinPrices();
-        RiskAnalysis bitcoinRisk = new RiskAnalysis(bitcoinPrices);
+        Options options = new Options();
+        options.addOption(new Option("i", "input", true, "Input file path"));
+        options.addOption(new Option("c", "confidence", true, "Confidence level in range (0, 1]"));
+        options.addOption(new Option("p", "position", true, "Position size in dollars"));
 
-        // Fetch Gold data
-        List<Double> goldPrices = fetchGoldPrices();
-        RiskAnalysis goldRisk = new RiskAnalysis(goldPrices);
+        CommandLineParser parser = new DefaultParser();
+        CommandLine cmd = parser.parse(options, args);
 
-        // Calculate and compare risks
-        double bitcoinVaR = bitcoinRisk.calculateVaR(0.95);
-        double goldVaR = goldRisk.calculateVaR(0.95);
+        String inputFilePath = cmd.getOptionValue("i");
+        double confidence = cmd.hasOption("c") ? cmd.getOptionValue("c") : RiskAnalysis.DEFAULT_CONFIDENCE;
+        double position = cmd.hasOption("p") ? cmd.getOptionValue("p") : RiskAnalysis.DEFAULT_POSITIONSIZE;
 
-        System.out.println("Bitcoin 95% VaR: " + bitcoinVaR);
-        System.out.println("Gold 95% VaR: " + goldVaR);
-
-        // Similar for CVaR
-    }
-
-    private static List<Double> fetchBitcoinPrices() {
-        // Implement API call to fetch Bitcoin prices
-    }
-
-    private static List<Double> fetchGoldPrices() {
-        // Implement API call to fetch Gold prices
+        try {
+            List<Double> prices = PricesReader.parsePricesFromCSV(inputFilePath);
+            RiskAnalysis ra = new RiskAnalysis(prices, position, confidence);
+            StringBuilder sb = new StringBuilder("Computing risk analysis for position ")
+                    .append(position)
+                    .append(" and confidence ")
+                    .append(confidence);
+            System.out.println(sb.toString());
+            System.out.println("Value at risk: " + ra.ValueAtRisk());
+            System.out.println("Conditional VaR: " + ra.ValueAtRisk());
+            System.out.println("Great success, high five!");
+        } catch (Exception e) {
+            System.err.println("ERROR: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 }

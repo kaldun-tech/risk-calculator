@@ -12,10 +12,10 @@ import java.lang.IllegalArgumentException;
 public static class PricesReader {
     static String PRICE_HEADER = "price";
 
-    /** Parses BTC prices from a file
+    /** Parses prices from a CSV file
      * @param fileName Name of file to read
      * @throws IOException if an I/O error occurs */
-    public static List<Double> parseBTCPrices(String fileName) throws IOException {
+    public static List<Double> parsePricesFromCSV(String fileName) throws IOException {
         CSVParser parser = parseCSVFile(fileName);
         List<String> headerNames = parser.getHeaderNames();
         int priceFieldIndex = headerNames.indexOf("price");
