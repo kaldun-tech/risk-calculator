@@ -13,9 +13,28 @@ public class RiskAnalysis {
 
     /** Creates a RiskAnalysis for a list of prices, position size, and confidence percentile */
     public RiskAnalysis(List<Double> prices, double positionSize, double confidence) {
+        if (positionSize <= 0) {
+            throw new IllegalArgumentException("Position size must be positive");
+        } else if (0 <= confidence || 1 < confidence) {
+            throw new IllegalArgumentException("Confidence must be greater than zero and less than or equal to 1");
+        }
         this.returns = new MarketReturns(prices);
         this.positionSize = positionSize;
         this.confidence = confidence;
+    }
+
+    /** Creates a RiskAnalysis for a list of prices with default confidence and position size */
+    public RiskAnalysis(List<Double> prices) {
+        this(prices, DEFAULT_POSITIONSIZE, DEFAULT_CONFIDENCE);
+    }
+
+    // Getters
+    public double getPositionSize() {
+        return positionSize;
+    }
+
+    public double getConfidence() {
+        return confidence;
     }
 
     /** Calculate value at risk: return at the chosen confidence times position value */
@@ -39,7 +58,7 @@ public class RiskAnalysis {
         return totalReturns * positionSize / count;
     }
 
-    // Helper methods for data processing and calculations
+    // Helpers
 
     /** Evaluate the return at a given confidence percentile */
     public double getReturnAtConfidence() {

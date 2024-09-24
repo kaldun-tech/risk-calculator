@@ -5,27 +5,26 @@ import org.junit.jupiter.api.Test;
 
 class MarketReturnsUnitTest {
 
-
     @Test
-    void testMarketReturnsConstructor_Null() {
+    void testMarketReturnsConstructor_null() {
         Assertions.assertThrows(IllegalArgumentException, new MarketReturns(null));
     }
 
     @Test
-    void testMarketReturnsConstructor_Empty() {
-        ArrayList<Double> prices = buildPriceList(new double[]);
+    void testMarketReturnsConstructor_empty() {
+        ArrayList<Double> prices = PriceListBuilder.buildList(new double[]);
         Assertions.assertThrows(IllegalArgumentException, new MarketReturns(null));
     }
 
     @Test
-    void testMarketReturnsConstructor_Small() {
-        ArrayList<Double> prices = buildPriceList(new double[]{0});
+    void testMarketReturnsConstructor_small() {
+        ArrayList<Double> prices = PriceListBuilder.buildList(new double[]{0});
         Assertions.assertThrows(IllegalArgumentException, new MarketReturns(null));
     }
 
     @Test
-    void testMarketReturnsConstructor_Normal() {
-        ArrayList<Double> prices = buildPriceList(new double[]{100, 110});
+    void testMarketReturnsConstructor_normal() {
+        ArrayList<Double> prices = PriceListBuilder.buildList(new double[]{100, 110});
         Assertions.assertThrows(IllegalArgumentException, new MarketReturns(null));
     }
 
@@ -40,14 +39,14 @@ class MarketReturnsUnitTest {
     }
 
     @Test
-    void testCalculateReturnPercent_NormalPrices() {
+    void testCalculateReturnPercent_normalPrices() {
         Assertions.assertEquals(10.0, MarketReturns.calculateReturnPercent(100, 110));
         Assertions.assertEquals(-20.0, MarketReturns.calculateReturnPercent(100, 80));
     }
 
     @Test
-    void testGetReturnPercentArr_Simple() {
-        ArrayList<Double> simplePrices = buildPriceList(new double[]{100, 110});
+    void testGetReturnPercentArr_simple() {
+        ArrayList<Double> simplePrices = PriceListBuilder.buildList(PriceListBuilder.SIMPLE_PRICE);
         MarketReturns mr = new MarketReturns(simplePrices);
         double[] returnPercents = mr.getReturnPercents();
         Assertions.assertEquals(new double[]{10}, returnPercents);
@@ -55,14 +54,9 @@ class MarketReturnsUnitTest {
 
     @Test
     void testGetReturnPercentArr_Complex() {
-        ArrayList<Double> simplePrices = buildPriceList(new double[]{100, 200, 50, 50});
+        ArrayList<Double> simplePrices = PriceListBuilder.buildList(PriceListBuilder.COMPLEX_PRICES);
         MarketReturns mr = new MarketReturns(simplePrices);
         double[] returnPercents = mr.getReturnPercents();
         Assertions.assertEquals(new double[]{-75, 0, 100}, returnPercents);
-    }
-
-    /** Test helper builds list of prices */
-    private void buildPriceList(double[] prices) {
-        return new ArrayList<Double>(prices);
     }
 }
