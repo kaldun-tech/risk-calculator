@@ -1,6 +1,8 @@
 package com.risk;
 
+import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PriceListBuilder {
     public static final double[] SIMPLE_PRICE = new double[]{100};
@@ -9,7 +11,11 @@ public class PriceListBuilder {
             98, 100, 104, 102, 101, 99, 97, 96, 99, 101};
 
     /** Test helper builds list of prices */
-    public static void buildList(double[] arr) {
-        return new ArrayList<Double>(arr);
+    public static List<Double> buildList(double[] arr) {
+        ArrayList<Double> list = new ArrayList(arr.length);
+        for (double d : arr) {
+            list.add(d);
+        }
+        return list;
     }
 }
