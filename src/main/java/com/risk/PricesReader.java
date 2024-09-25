@@ -1,14 +1,14 @@
 package com.risk;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.IllegalArgumentException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import java.lang.IllegalArgumentException;
 
 public class PricesReader {
     static String PRICE_HEADER = "price";

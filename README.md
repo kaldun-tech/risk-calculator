@@ -1,9 +1,11 @@
 # risk-calculator
 Computes the risk of investments using Value at Risk and Conditional Value at Risk metrics.
 
-Built using gradle
+## Build
+Build using gradle: gradlew build
 
-Run at the command-line supporting the following options:
+## Run
+Run using java at the command-line supporting the following options:
 
 -i [file path]: Specify CSV data for investment to load. Must have a column with header "price"
 

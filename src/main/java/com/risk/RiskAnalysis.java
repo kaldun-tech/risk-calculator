@@ -1,7 +1,7 @@
 package com.risk;
 
 import java.util.List;
-import org.apache.commons.math.stat.descriptive.rank.Percentile;
+import org.apache.commons.math3.stat.descriptive.rank.Percentile;
 
 public class RiskAnalysis {
     /** Default confidence percentage is 95% or 5th percentile */
@@ -64,7 +64,7 @@ public class RiskAnalysis {
         int count = 0;
         double totalReturns = 0.0;
         double[] percents = returns.getReturnPercents();
-        for (int i = percents.length - 1; 0 <= i && returnAtConfidence < percents[i]; --i ) {
+        for (int i = percents.length - 1; 0 <= i && minimum < percents[i]; --i ) {
             totalReturns += percents[i];
             ++count;
         }

@@ -12,17 +12,18 @@ public class MarketReturns {
         if (dailyPrices == null || dailyPrices.size() < 2) {
             throw new IllegalArgumentException("Cannot create returns for invalid prices list");
         }
-        returns = new ArrayList<>(dailyPrices.size() - 1);
+        returnPercents = new ArrayList<>(dailyPrices.size() - 1);
         buildReturnPercents(dailyPrices);
         sortReturnPercentsLowestToHighest();
     }
 
     private void buildReturnPercents(List<Double> dailyPrices) {
+        // Build from last price to first
         for (int i = dailyPrices.size() - 1; 0 < i; --i) {
             double currentPrice = dailyPrices.get(i);
             double previousPrice = dailyPrices.get(i - 1);
             double returnPercent = calculateReturnPercent(previousPrice, currentPrice);
-            returnPercents.set(i - 1, returnPercent);
+            returnPercents.add(returnPercent);
         }
     }
 
@@ -32,7 +33,12 @@ public class MarketReturns {
 
     /** Gets the return percentages as a sorted array of doubles from lowest to highest */
     public double[] getReturnPercents() {
-        return returnPercents.toArray(new double[returnPercents.size()]);
+        int size = returnPercents.size();
+        double[] asArray = new double[size];
+        for (int i = 0; i < size; ++i) {
+            asArray[i] = returnPercents.get(i);
+        }
+        return asArray;
     }
 
     /** Calculates percent return for a previous value and current

@@ -12,7 +12,7 @@ class MarketReturnsUnitTest {
 
     @Test
     void testMarketReturnsConstructor_empty() {
-        ArrayList<Double> prices = PriceListBuilder.buildList(new double[]);
+        ArrayList<Double> prices = PriceListBuilder.buildList(new double[0]);
         Assertions.assertThrows(IllegalArgumentException, new MarketReturns(null));
     }
 

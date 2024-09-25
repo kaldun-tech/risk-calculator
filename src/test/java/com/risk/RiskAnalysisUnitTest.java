@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
-public class RiskAnalaysisUnitTest {
+public class RiskAnalysisUnitTest {
     private static final List<Double> SIMPLE_PRICE = PriceListBuilder.buildList(PriceListBuilder.SIMPLE_PRICE);
     private static final List<Double> ADVANCED_PRICES = PriceListBuilder.buildList(PriceListBuilder.COMPLEX_PRICES);
     private static final double ADV_EXP_VAR = -3.92;
