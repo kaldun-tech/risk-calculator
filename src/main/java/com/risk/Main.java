@@ -1,4 +1,4 @@
-package main.java.com.risk;
+package com.risk;
 
 import java.util.List;
 import org.apache.commons.cli.Option;
@@ -26,8 +26,8 @@ public class Main {
                     .append(" and confidence ")
                     .append(confidence);
             System.out.println(sb.toString());
-            System.out.println("Value at risk: " + ra.ValueAtRisk());
-            System.out.println("Conditional VaR: " + ra.ValueAtRisk());
+            System.out.println("Value at risk: " + ra.valueAtRisk());
+            System.out.println("Conditional VaR: " + ra.conditionalValueAtRisk());
             System.out.println("Great success, high five!");
         } catch (Exception e) {
             System.err.println("ERROR: " + e.getMessage());

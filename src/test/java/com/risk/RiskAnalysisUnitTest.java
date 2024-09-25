@@ -1,4 +1,4 @@
-package test.java.com.risk;
+package com.risk;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;

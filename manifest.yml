@@ -1,0 +1,6 @@
+---
+applications:
+- name: risk-calculator
+  memory: 256M
+  instances: 1
+  host: risk-calculator

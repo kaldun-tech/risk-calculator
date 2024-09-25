@@ -1,4 +1,4 @@
-package test.java.com.risk;
+package com.risk;
 
 import java.util.ArrayList;
 

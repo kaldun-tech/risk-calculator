@@ -1,15 +1,16 @@
-package main.java.com.risk;
+package com.risk;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import java.lang.IllegalArgumentException;
 
-public static class PricesReader {
+public class PricesReader {
     static String PRICE_HEADER = "price";
 
     /** Parses prices from a CSV file
@@ -18,7 +19,7 @@ public static class PricesReader {
     public static List<Double> parsePricesFromCSV(String fileName) throws IOException {
         CSVParser parser = parseCSVFile(fileName);
         List<String> headerNames = parser.getHeaderNames();
-        int priceFieldIndex = headerNames.indexOf("price");
+        int priceIndex = headerNames.indexOf("price");
         return getPricesFromRecords(parser.getRecords(), priceIndex);
     }
 
@@ -34,8 +35,8 @@ public static class PricesReader {
         }
         List<Double> priceList = new ArrayList(csvRecords.size());
         for (CSVRecord next : csvRecords) {
+            String priceField = next.get(priceIndex);
             try {
-                String priceField = next.get(priceIndex);
                 double price = Double.parseDouble(priceField);
                 priceList.add(price);
             } catch (NumberFormatException e) {

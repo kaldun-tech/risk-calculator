@@ -1,4 +1,4 @@
-package main.java.com.risk;
+package com.risk;
 
 import java.util.List;
 import org.apache.commons.math.stat.descriptive.rank.Percentile;
@@ -39,23 +39,14 @@ public class RiskAnalysis {
 
     /** Calculate value at risk: return at the chosen confidence times position value */
     public double valueAtRisk() {
-        double returnAtConfidence = getReturnAtConfidence(confidence);
+        double returnAtConfidence = getReturnAtConfidence();
         return returnAtConfidence * positionSize;
     }
 
     /** Calculate conditional value at risk: average of all returns beyond VaR percentile times position value */
     public double conditionalValueAtRisk() {
-        double returnAtConfidence = getReturnAtConfidence(confidence);
-
-        int count = 0;
-        double totalReturns = 0.0;
-        double[] percents = returns.getReturnPercents();
-        // Use reverse order to get returns from highest until confidence threshold
-        for (int i = percents.length - 1; 0 <= i && returnAtConfidence < percents[i]; --i ) {
-            totalReturns += percents[i];
-            ++count;
-        }
-        return totalReturns * positionSize / count;
+        double minimumReturn = getReturnAtConfidence();
+        return getAverageReturnsHigherThan(minimumReturn) * positionSize;
     }
 
     // Helpers
@@ -65,5 +56,18 @@ public class RiskAnalysis {
         double[] percentReturns = returns.getReturnPercents();
         Percentile p = new Percentile(confidence);
         return p.evaluate(percentReturns, confidence);
+    }
+
+    /** Gets the average returns of all returns greater than the minimum value.
+     * This relies on returns being sorted lowest to highest. */
+    private double getAverageReturnsHigherThan(double minimum) {
+        int count = 0;
+        double totalReturns = 0.0;
+        double[] percents = returns.getReturnPercents();
+        for (int i = percents.length - 1; 0 <= i && returnAtConfidence < percents[i]; --i ) {
+            totalReturns += percents[i];
+            ++count;
+        }
+        return totalReturns / count;
     }
 }
