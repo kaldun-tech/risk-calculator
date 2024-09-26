@@ -15,7 +15,7 @@ public class RiskAnalysis {
     public RiskAnalysis(List<Double> prices, double positionSize, double confidence) {
         if (positionSize <= 0) {
             throw new IllegalArgumentException("Position size must be positive");
-        } else if (0 <= confidence || 1 < confidence) {
+        } else if (confidence <= 0 || 1 < confidence) {
             throw new IllegalArgumentException("Confidence must be greater than zero and less than or equal to 1");
         }
         this.returns = new MarketReturns(prices);

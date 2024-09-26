@@ -24,17 +24,21 @@ public class PricesReader {
     }
 
     /** Gets a list of prices from CSV records
-     * @param csvRecords List of CSVRecords parsed from file - must be non-null
+     * @param csvRecords List of CSVRecords parsed from file - must be non-null with length greater than one
      * @param priceIndex Index of price field in the record, must be greater than zero
      * @throws java.lang.IllegalArgumentException For invalid input */
     public static List<Double> getPricesFromRecords(List<CSVRecord> csvRecords, int priceIndex) {
         if (csvRecords == null) {
             throw new IllegalArgumentException("csvRecords must be a valid list");
+        } else if (csvRecords.size() < 2) {
+            throw new IllegalArgumentException("csvRecords must have length greater than one");
         } else if (priceIndex < 0) {
             throw new IllegalArgumentException("priceIndex must be non-negative");
         }
         List<Double> priceList = new ArrayList(csvRecords.size());
-        for (CSVRecord next : csvRecords) {
+        // Skip index zero for header
+        for (int i = 1; i < csvRecords.size(); ++i) {
+            CSVRecord next = csvRecords.get(i);
             String priceField = next.get(priceIndex);
             try {
                 double price = Double.parseDouble(priceField);

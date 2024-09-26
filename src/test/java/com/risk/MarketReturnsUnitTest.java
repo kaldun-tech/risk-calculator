@@ -26,12 +26,6 @@ class MarketReturnsUnitTest {
     }
 
     @Test
-    void testMarketReturnsConstructor_normal() {
-        List<Double> prices = PriceListBuilder.buildList(new double[]{100, 110});
-        assertThrows(IllegalArgumentException.class, () -> new MarketReturns(prices));
-    }
-
-    @Test
     void testCalculateReturnPercent_zeroPreviousPrice() {
         assertThrows(IllegalArgumentException.class, () -> MarketReturns.calculateReturnPercent(0, 100));
     }
@@ -49,7 +43,7 @@ class MarketReturnsUnitTest {
 
     @Test
     void testGetReturnPercentArr_simple() {
-        List<Double> simplePrices = PriceListBuilder.buildList(PriceListBuilder.SIMPLE_PRICE);
+        List<Double> simplePrices = PriceListBuilder.buildList(PriceListBuilder.SIMPLE_PRICES);
         MarketReturns mr = new MarketReturns(simplePrices);
         double[] returnPercents = mr.getReturnPercents();
         assertEquals(1, returnPercents.length);
