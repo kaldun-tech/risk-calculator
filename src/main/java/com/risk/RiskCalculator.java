@@ -8,7 +8,7 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
-public class Main {
+public class RiskCalculator {
     public static void main(String[] args) {
         Options options = new Options();
         buildOptions(options);
@@ -28,6 +28,7 @@ public class Main {
     }
 
     private static void buildOptions(Options options) {
+        options.addOption(new Option("help", "print this message"));
         options.addOption(new Option("i", "input", true, "Input file path"));
         options.addOption(new Option("c", "confidence", true, "Confidence level in range (0, 1]"));
         options.addOption(new Option("p", "position", true, "Position size in dollars"));

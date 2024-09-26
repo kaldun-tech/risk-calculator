@@ -1,19 +1,4 @@
 @ECHO OFF
 cd ..
-gradlew compileJava
-set ret=%ERRORLEVEL%
-if [ $ret -ne 0 ]; then
-exit $ret
-fi
-rm -rf build
-
-rm -rf target
-
-./gradlew build
-ret=$?
-if [ $ret -ne 0 ]; then
-exit $ret
-fi
-
-rm -rf build
-exit
+gradlew build
+gradlew run --args="-i E:\Git\risk-calculator\data\btc-usd-092024.csv"

@@ -19,6 +19,7 @@ public class PricesReader {
     public static List<Double> parsePricesFromCSV(String fileName) throws IOException {
         CSVParser parser = parseCSVFile(fileName);
         List<String> headerNames = parser.getHeaderNames();
+        System.out.println("Header names: " + String.join(",", headerNames));
         int priceIndex = headerNames.indexOf("price");
         return getPricesFromRecords(parser.getRecords(), priceIndex);
     }
@@ -55,6 +56,7 @@ public class PricesReader {
      * @throws java.lang.IllegalArgumentException for invalid input
      * @throws IOException if an I/O error occurs */
     private static CSVParser parseCSVFile(String fileName) throws IOException {
+        System.out.println("Reading CSV file: " + fileName);
         return CSVParser.parse(new File(fileName), StandardCharsets.UTF_8, CSVFormat.DEFAULT);
     }
 }

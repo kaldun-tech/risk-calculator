@@ -39,8 +39,9 @@ public class RiskAnalysisUnitTest {
     public void testRiskAnalysisAdvancedMetrics() {
         RiskAnalysis advanced = new RiskAnalysis(ADVANCED_PRICES);
         double returnAtConfidence = advanced.getReturnAtConfidence();
-        double positionSize = advanced.getPositionSize();
         assertEquals(ADV_EXP_VAR, returnAtConfidence);
+
+        double positionSize = advanced.getPositionSize();
         assertEquals(ADV_EXP_VAR * positionSize, advanced.valueAtRisk());
         assertEquals(ADV_EXP_CVAR * positionSize, advanced.conditionalValueAtRisk());
     }
