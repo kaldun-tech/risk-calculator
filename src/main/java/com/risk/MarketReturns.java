@@ -18,10 +18,9 @@ public class MarketReturns {
     }
 
     private void buildReturnPercents(List<Double> dailyPrices) {
-        // Build from last price to first
-        for (int i = dailyPrices.size() - 1; 0 < i; --i) {
-            double currentPrice = dailyPrices.get(i);
-            double previousPrice = dailyPrices.get(i - 1);
+        for (int i = 0; i < dailyPrices.size() - 1; ++i) {
+            double previousPrice = dailyPrices.get(i);
+            double currentPrice = dailyPrices.get(i + 1);
             double returnPercent = calculateReturnPercent(previousPrice, currentPrice);
             returnPercents.add(returnPercent);
         }
@@ -49,6 +48,6 @@ public class MarketReturns {
         } else if (currentPrice <= 0) {
             throw new IllegalArgumentException("Invalid currentPrice");
         }
-        return (currentPrice - previousPrice) * 100.0 / previousPrice;
+        return (currentPrice - previousPrice) / previousPrice;
     }
 }

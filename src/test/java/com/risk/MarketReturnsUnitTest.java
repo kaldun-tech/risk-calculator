@@ -37,8 +37,8 @@ class MarketReturnsUnitTest {
 
     @Test
     void testCalculateReturnPercent_normalPrices() {
-        assertEquals(10.0, MarketReturns.calculateReturnPercent(100, 110));
-        assertEquals(-20.0, MarketReturns.calculateReturnPercent(100, 80));
+        assertEquals(0.1, MarketReturns.calculateReturnPercent(100, 110));
+        assertEquals(-0.2, MarketReturns.calculateReturnPercent(100, 80));
     }
 
     @Test
@@ -47,15 +47,15 @@ class MarketReturnsUnitTest {
         MarketReturns mr = new MarketReturns(simplePrices);
         double[] returnPercents = mr.getReturnPercents();
         assertEquals(1, returnPercents.length);
-        assertEquals(10, returnPercents[0]);
+        assertEquals(0.1, returnPercents[0]);
     }
 
     @Test
     void testGetReturnPercentArr_Complex() {
-        List<Double> simplePrices = PriceListBuilder.buildList(PriceListBuilder.COMPLEX_PRICES);
-        MarketReturns mr = new MarketReturns(simplePrices);
+        List<Double> complexPrices = PriceListBuilder.buildList(PriceListBuilder.COMPLEX_PRICES);
+        MarketReturns mr = new MarketReturns(complexPrices);
         double[] returnPercents = mr.getReturnPercents();
-        double[] expectedReturns = {-75, 0, 100};
+        double[] expectedReturns = {-.75, 0, 1};
         assertEquals(3, returnPercents.length);
         for (int i = 0; i < returnPercents.length; ++i) {
             assertEquals(expectedReturns[i], returnPercents[i]);

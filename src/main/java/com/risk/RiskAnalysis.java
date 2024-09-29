@@ -1,7 +1,6 @@
 package com.risk;
 
 import java.util.List;
-import org.apache.commons.math3.stat.descriptive.rank.Percentile;
 
 public class RiskAnalysis {
     /** Default confidence percentage is 95% or 5th percentile */
@@ -37,34 +36,34 @@ public class RiskAnalysis {
         return confidence;
     }
 
-    /** Calculate value at risk: return at the chosen confidence times position value */
+    /** Calculate value at risk: opposite of return (loss) at the target percentile times position value */
     public double valueAtRisk() {
-        double returnAtConfidence = getReturnAtConfidence();
-        return returnAtConfidence * positionSize;
+        double returnAtTargetPercentile = getReturnAtTargetPercentile();
+        return -returnAtTargetPercentile * positionSize;
     }
 
-    /** Calculate conditional value at risk: average of all returns beyond VaR percentile times position value */
+    /** Calculate conditional value at risk: average of all returns (losses) worse than VaR percentile times position value */
     public double conditionalValueAtRisk() {
-        double minimumReturn = getReturnAtConfidence();
-        return getAverageReturnsHigherThan(minimumReturn) * positionSize;
+        double minimumReturn = getReturnAtTargetPercentile();
+        return -getAverageReturnsWorseThan(minimumReturn) * positionSize;
     }
 
     // Helpers
 
-    /** Evaluate the return at a given confidence percentile */
-    public double getReturnAtConfidence() {
+    /** Evaluate the return at target percentile */
+    public double getReturnAtTargetPercentile() {
         double[] percentReturns = returns.getReturnPercents();
-        Percentile p = new Percentile(confidence);
-        return p.evaluate(percentReturns, confidence);
+        int index = (int) Math.ceil(percentReturns.length * (1 - confidence)) - 1;
+        return percentReturns[index];
     }
 
-    /** Gets the average returns of all returns greater than the minimum value.
+    /** Gets the average returns of all returns worse than the maximum value.
      * This relies on returns being sorted lowest to highest. */
-    private double getAverageReturnsHigherThan(double minimum) {
+    private double getAverageReturnsWorseThan(double maximum) {
         int count = 0;
         double totalReturns = 0.0;
         double[] percents = returns.getReturnPercents();
-        for (int i = percents.length - 1; 0 <= i && minimum < percents[i]; --i ) {
+        for (int i = 0; i < percents.length && percents[i] <= maximum; ++i ) {
             totalReturns += percents[i];
             ++count;
         }
