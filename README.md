@@ -5,7 +5,9 @@ Computes the risk of investments using Value at Risk and Conditional Value at Ri
 Build using gradle: gradlew build
 
 ## Run
-Run using java at the command-line supporting the following options:
+Run using java at the command-line: gradlew run --args="-i [path/to/datafile.csv]"
+
+Supports the following options:
 
 -i [file path]: Specify CSV data for investment to load. Must have a column with header "price"
 
