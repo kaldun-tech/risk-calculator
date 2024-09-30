@@ -57,6 +57,9 @@ public class PricesReader {
      * @throws IOException if an I/O error occurs */
     private static CSVParser parseCSVFile(String fileName) throws IOException {
         System.out.println("Reading CSV file: " + fileName);
-        return CSVParser.parse(new File(fileName), StandardCharsets.UTF_8, CSVFormat.DEFAULT);
+        return CSVParser.parse(new File(fileName), StandardCharsets.UTF_8, CSVFormat.DEFAULT
+                .withFirstRecordAsHeader()
+                .withIgnoreHeaderCase()
+                .withTrim());
     }
 }
